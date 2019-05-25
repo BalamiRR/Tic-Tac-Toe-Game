@@ -2,4 +2,6 @@
 React-Native App
 
 
-Tic tac toe Game using React Native for Mobile App
+:Pizza: Tic tac toe Game using React Native for Mobile App :Pizza:
+
+![alt text](./image/TicTacToe.png)
