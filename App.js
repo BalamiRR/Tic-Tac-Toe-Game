@@ -4,11 +4,11 @@ import { MaterialCommunityIcons as Icon } from 'react-native-vector-icons';
 import Modal from "react-native-modal";
 
 export default class App extends React.Component {
-  //Bu kisimda ise mekanik kismini yapicaz asagidakiler UI kismi olucak.
+  //Mekanik ve UI kısmı
   constructor(props) {
     super(props);
 
-    this.state = {     //Bu kisimda amacimiz oyun sirasi kimde onu bulmak
+    this.state = {//Here We find out whose turn to play.
       gameState: [
         [0, 0, 0],
         [0, 0, 0],
@@ -23,7 +23,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    this.initializeGame();      //Bu kisimda oyunu baslatmak icin
+    this.initializeGame(); //This is the part that we start the game
   }
 
   initializeGame = () => {
@@ -60,7 +60,8 @@ export default class App extends React.Component {
 
     }
     //Check columns
-    for (var i = 0; i < NUM_TILES; i++) {       //Burdaki amacimiz tictocta hangi bolgelerde dogru olabilir onu buluyoruz.
+    for (var i = 0; i < NUM_TILES; i++) {
+      /Burada ise tictocta hangi bolgelerde dogru olabilir, onu buluyoruz
       sum = arr[0][i] + arr[1][i] + arr[2][i];
         if (sum == 3) { 
           return 1; 
@@ -73,8 +74,8 @@ export default class App extends React.Component {
         }
     }
     
-    //Check the diagonals..
-    sum = arr[0][0] + arr[1][1] + arr[2][2];    // Burda  0,0 ve 1,1  ve 2,2 olan kisimlarda X X X veya 0 0 0  olma durumu  
+    //Check the diagonals..0,0 ve 1,1  ve 2,2 olan kisimlarda X X X veya 0 0 0  olma durumu
+    sum = arr[0][0] + arr[1][1] + arr[2][2];      
       if (sum == 3) { 
         return 1; 
       }
@@ -82,7 +83,7 @@ export default class App extends React.Component {
         return -1; 
       }
 
-    sum = arr[2][0] + arr[1][1] + arr[0][2];     // Yukardakiyle ayni yapiyoruz
+    sum = arr[2][0] + arr[1][1] + arr[0][2];     
       if (sum == 3) { 
         return 1; 
       }
@@ -101,9 +102,10 @@ export default class App extends React.Component {
   }
 
   onTilePress = (row, col) => {
-    // Dont allow tiles to change   (Yani kutuda X olustu tekrar tikladigimizda O olmasin)
+    // Dont allow tiles to change Kutuda X olustu tekrar tikladigimizda O olmasin
     var value = this.state.gameState[row][col];
-      if (value != 0) {          //Yani degerimiz yani X imiz veya O muz sifira esitse sabit kalcak
+      if (value != 0) {
+        //Yani X degerimiz veya O degerimiz sifira esitse sabit olacak
         return;
       }
 
@@ -116,7 +118,7 @@ export default class App extends React.Component {
     this.setState({ gameState: arr });
 
     //Switch to other player...
-    var nextPlayer = (currentPlayer == 1) ? -1 : 1;    //Burda diyorki currentPlayer 1 se -1 cikart(? print gibi) " : " isareti ise else 1 cikar demek
+    var nextPlayer = (currentPlayer == 1) ? -1 : 1;
     this.setState({ currentPlayer: nextPlayer });
 
     //Check for winners.
@@ -124,7 +126,8 @@ export default class App extends React.Component {
 
     if (winner == 1) {
       this.setState( prevState => ({
-        playerOneScore: prevState.playerOneScore + 1  //Ilk once arttirma yaptiktan sonra  yazdiricaz Unutma!!
+        //Ilk once arttirma yaptiktan sonra  yazdiricaz 
+        playerOneScore: prevState.playerOneScore + 1  
       }));
       Alert.alert("Winner is Player 1 !!");                       
       this.initializeGame();   //Oyunu tekrardan baslatma
@@ -138,14 +141,14 @@ export default class App extends React.Component {
     }
   }
 
-  onNewGamePress = () => {             // Boyle Fonksiyonlar tuslara basma veya fonksiyon yollama  functionlari bunlar () =>  korkma boyle sekillerden
+  onNewGamePress = () => {             
     this.initializeGame();
   }
 
   renderIcon = (row, col) => {
     var value = this.state.gameState[row][col];
     switch (value) {
-      case 1: return <Icon name="close" style={styles.tileX} />;   //Bu Icon kelimesi yukaridaki as Icon dan geliyor Componentten yani react-native-vector-icons demek
+      case 1: return <Icon name="close" style={styles.tileX} />;   
       case -1: return <Icon name="circle-outline" style={styles.tileO} />;
       default: return <View />;
     }
